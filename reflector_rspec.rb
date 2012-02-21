@@ -1,11 +1,25 @@
 require "./reflector.rb"
 
 describe "SourceCode"  do
-
-
-
-
-
+    before :each do
+      @doc = SourceCode.new('test.rb')
+    end
+    it "should create an array for storing a sourcecode file" do
+      @doc.should be_an_instance_of(SourceCode)
+    end
+    
+    it "#method_extraction should return an array of methods" do
+      @doc.method_extraction.should == ['reverse','split']
+    end
+    
+    
+    
+    
+    
+    
+    
+    
+    it "#method_extraction should pull out the methods and return them in a hash"
 
 
 

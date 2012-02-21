@@ -1,5 +1,10 @@
 class SourceCode
 
+  def initialize document
+    @file = File.open(document, 'r')
+
+  end
+
 
 
 
