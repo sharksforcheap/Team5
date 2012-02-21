@@ -8,7 +8,13 @@ describe "Reflector"  do
 	
   describe "#parse_for_methods" do
 		it "should read a file" do
-	  	Reflector.new.parse_for_methods.should be_a_kind_of(Array)
+
+	  	Reflector.new.parse_for_methods('test.rb').should be_a_kind_of(Array)
 		end
+
+		it "should split the test file" do 
+			Reflector.new.parse_for_methods('test.rb').should == ['def', 'hello','end']
+		end
+
 	end
 end
