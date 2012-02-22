@@ -9,7 +9,7 @@ describe "SourceCode"  do
     end
     
     it "#extract_methods should return an array of methods" do
-      @doc.extract_methods.should == {"reverse"=>1, "each"=>2, "split"=>1, "find"=>1, "my_special_method"=>1}
+      @doc.count_methods.should == {"reverse"=>1, "each"=>2, "split"=>1, "find"=>1, "my_special_method"=>1}
     end
 
     

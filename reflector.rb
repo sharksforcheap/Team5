@@ -9,7 +9,7 @@ class SourceCode
   end
 
   
-  def extract_methods
+  def count_methods
     @parts_list = {}
     @file_lines.split.each do |line_part|
       if line_part.include?('.')
