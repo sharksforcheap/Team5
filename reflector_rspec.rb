@@ -4,16 +4,14 @@ describe "SourceCode"  do
     before :each do
       @doc = SourceCode.new('test.rb')
     end
-    it "should create an array for storing a sourcecode file" do
+    it "#should create an array for storing a sourcecode file" do
       @doc.should be_an_instance_of(SourceCode)
     end
     
-    it "#method_extraction should return an array of methods" do
-      @doc.method_extraction.should == ['reverse','split']
+    it "#extract_methods should return an array of methods" do
+      @doc.extract_methods.should == {"reverse"=>1, "each"=>2, "split"=>1, "find"=>1, "my_special_method"=>1}
     end
-    
-    
-    
+
     
     
     
@@ -24,6 +22,8 @@ describe "SourceCode"  do
 
 
 
+
+      # input_hash = {'reverse'=>['string','hash','array'], 'split'=>['string'], 'each'=>['array', 'hash'], 'find'=>['array']}
 
   # 
   #   it "should instantiate a new object with class relfector" do
