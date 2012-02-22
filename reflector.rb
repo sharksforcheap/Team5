@@ -9,19 +9,24 @@ class SourceCode
   end
 
   
-  def count_methods
+  def count_methods(input_hash = {})
     @parts_list = {}
     @file_lines.split.each do |line_part|
       if line_part.include?('.')
         line_part.split(".")[1..-1].each do |word|
-          @parts_list[word] = (@parts_list[word].nil? ? 1 : @parts_list[word] + 1)
+          if input_hash.has_key?(word)
+            @parts_list[word] = (@parts_list[word].nil? ? 1 : @parts_list[word] + 1)
+          end
         end
       end
     end
     @parts_list
   end
   
-
+  def extract_core_methods(input_hash = {})
+    
+    
+  end
 
 
 

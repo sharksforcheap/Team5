@@ -8,11 +8,17 @@ describe "SourceCode"  do
       @doc.should be_an_instance_of(SourceCode)
     end
     
-    it "#extract_methods should return an array of methods" do
-      @doc.count_methods.should == {"reverse"=>1, "each"=>2, "split"=>1, "find"=>1, "my_special_method"=>1}
+    it "#count_methods should return an array of methods" do
+      input_hash = {'reverse'=>['string','hash','array'], 'split'=>['string'], 'each'=>['array', 'hash'], 'find'=>['array']}
+      @doc.count_methods(input_hash).should == {"reverse"=>1, "each"=>2, "split"=>1, "find"=>1}
     end
 
-    
+    # it "#extract_core_methods should delete non-core methods from the methods hash" do
+    # 
+    #   @parts_list.keys.should  be equal to input hash
+    #   
+    # end
+    # 
     
     
     
@@ -23,7 +29,7 @@ describe "SourceCode"  do
 
 
 
-      # input_hash = {'reverse'=>['string','hash','array'], 'split'=>['string'], 'each'=>['array', 'hash'], 'find'=>['array']}
+  
 
   # 
   #   it "should instantiate a new object with class relfector" do
