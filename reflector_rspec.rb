@@ -27,4 +27,28 @@ describe "SourceCode"  do
       end
     end
     
+    describe "directory structure" do
+      before :each do
+        @input_hash = {'reverse'=>['string','hash','array'], 'split'=>['string'], 'each'=>['array', 'hash'], 'find'=>['array']}
+      end
+      it "should be able to instantiate through factory method on single file" do
+        code_obj = SourceCode.from_file('test.rb')
+        code_obj.count_methods(@input_hash).should == {"reverse"=>1, "each"=>2, "split"=>1, "find"=>1}
+      end
+    
+      it "should be able to instantiate through factory method on directory" do
+        code_obj = SourceCode.from_dir('./test_input_directory')
+        code_obj.count_methods(@input_hash).should == {"reverse"=>2, "each"=>4, "split"=>2, "find"=>2}
+      end
+    
+      it "should be able to instantiate through factory method on directory if given with final slash" do
+        code_obj = SourceCode.from_dir('./test_input_directory/')
+        code_obj.count_methods(@input_hash).should == {"reverse"=>2, "each"=>4, "split"=>2, "find"=>2}
+      end
+    
+      it "should be able to instantiate through factory method on directory with subdirectories" do
+        code_obj = SourceCode.from_subdir('./test_input_directory')
+        code_obj.count_methods(@input_hash).should == {"reverse"=>3, "each"=>6, "split"=>3, "find"=>3}
+      end
+    end
 end

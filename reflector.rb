@@ -3,11 +3,16 @@ require './RubyMethods.rb'
 class SourceCode
 
   def initialize document
-    @file = File.open(document, 'r')
-    @file_lines = ''
-    while line = @file.gets do      
-      @file_lines += line.split("#")[0]
+    @file_lines = get_file_contents document
+  end
+  
+  def get_file_contents document
+    file = File.open(document, 'r')
+    file_lines = ''
+    while line = file.gets do      
+      file_lines += line.split("#")[0]
     end
+    file_lines
   end
   
   def parse(string)
@@ -31,6 +36,29 @@ class SourceCode
     @parts_list
   end
   
+  def self.from_subdir path, accumulating_object = SourceCode.new
+    formatted_path = format_path(path)
+    # first, iterate over subdirectories
+    Dir.glob(formatted_path + "**/*").select {|s| s.end_with?(".rb")}.each do |f|
+      accumulating_object.input_file(f)
+    end
+    accumulating_object
+  end
+
+  def self.format_path path
+    path << "/" unless path.end_with?("/")
+    path
+  end
+  
+  def self.from_file filename
+    SourceCode.new(filename)
+  end
+  
+  def self.from_dir(directory)
+    
+  end
+  
 end
+
 
 # ignore strings, except when interpolated
