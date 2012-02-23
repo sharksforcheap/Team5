@@ -12,27 +12,20 @@ describe "SourceCode"  do
       input_hash = {'reverse'=>['string','hash','array'], 'split'=>['string'], 'each'=>['array', 'hash'], 'find'=>['array']}
       @doc.count_methods(input_hash).should == {"reverse"=>1, "each"=>2, "split"=>1, "find"=>1}
     end
+    
+    it "#should return methods followed by paranthesis as part of the #count_methods array" do
+      @doc = SourceCode.new('test_parens.rb')
+      input_hash = {'reverse'=>['string','hash','array'], 'split'=>['string'], 'each'=>['array', 'hash'], 'find'=>['array'], 'sort_by'=>['string', 'object']}
+      @doc.count_methods(input_hash).should == {"sort_by"=>1, "each"=>2, "split"=>2}
+    end
+    
+    it "#count_methods should return an array of methods, ignoring anything commented." do
+      @doc = SourceCode.new('test_commenting.rb')
+      input_hash = {'reverse'=>['string','hash','array'], 'split'=>['string'], 'each'=>['array', 'hash'], 'find'=>['array']}
+      @doc.count_methods(input_hash).should == {"reverse"=>1, "each"=>2, "split"=>1, "find"=>1}
+    end
+end
 
-
-
-
-
-  
-
-  # 
-  #   it "should instantiate a new object with class relfector" do
-  #     Reflector.new.should be_an_instance_of(Reflector)
-  #   end
-  # 
-  #   describe "#parse_for_methods" do
-  #   it "should read a file" do
-  # 
-  #     Reflector.new.parse_for_methods('test.rb').should be_a_kind_of(Array)
-  #   end
-  # 
-  #   it "should split the test file" do 
-  #     Reflector.new.parse_for_methods('test.rb').should == ['def', 'hello','end']
-  #   end
-  # 
-  # end
+describe "Statistics" do
+  it "statistics should instantiate"
 end
