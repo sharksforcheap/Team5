@@ -2,11 +2,21 @@ require './RubyMethods.rb'
 
 class SourceCode
 
-  def initialize document
-    @file_lines = get_file_contents document
+  def initialize source, file_type= :file
+    if file_type == :file
+      @file_lines = SourceCode.get_file_contents source
+    elsif file_type == :string
+      @file_lines = source      
+    elsif file_type == :folder
+      @file_lines = SourceCode.from_dir source      
+    end
   end
   
-  def get_file_contents document
+  def see_contents
+    @file_lines
+  end
+    
+  def self.get_file_contents document
     file = File.open(document, 'r')
     file_lines = ''
     while line = file.gets do      
@@ -35,15 +45,6 @@ class SourceCode
     end
     @parts_list
   end
-  
-  def self.from_subdir path, accumulating_object = SourceCode.new
-    formatted_path = format_path(path)
-    # first, iterate over subdirectories
-    Dir.glob(formatted_path + "**/*").select {|s| s.end_with?(".rb")}.each do |f|
-      accumulating_object.input_file(f)
-    end
-    accumulating_object
-  end
 
   def self.format_path path
     path << "/" unless path.end_with?("/")
@@ -55,10 +56,26 @@ class SourceCode
   end
   
   def self.from_dir(directory)
-    
+    formatted_path = SourceCode.format_path(directory)
+    directories = Dir.glob(formatted_path + "**/*")
+    directories << directory
+    accumulated_contents = ''
+    directories.each do |subdirectory|
+      unless subdirectory.match(/\w\./)
+        Dir.foreach(subdirectory) do |file|
+          if file.match(/\w/)
+            if file.end_with?('.rb')
+              accumulated_contents += SourceCode.get_file_contents(SourceCode.format_path(subdirectory) + file)
+            end
+          end
+        end
+      end
+    end
+    SourceCode.new(accumulated_contents, :string)
   end
-  
 end
 
+# puts SourceCode.from_dir('./tests/').count_methods({'reverse'=>['string','hash','array'], 'split'=>['string'], 'each'=>['array', 'hash'], 'find'=>['array']}
+# )
 
 # ignore strings, except when interpolated
