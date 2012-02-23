@@ -37,9 +37,6 @@ class Statistics
   def initialize(hash)
     @hash = hash
   end
-  
 end
 
-# ignore commented code
-# - The second it hits a "#" it should stop, except when the hash is followed by a "{"
 # ignore strings, except when interpolated
