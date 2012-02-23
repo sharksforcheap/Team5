@@ -18,7 +18,6 @@ class SourceCode
     @parts_list = {}
     @file_lines.gsub!(/([""'])(?:(?=(\\?))\2.)*?\1/, "")
     @file_lines = parse(@file_lines)
-    puts @file_lines
     @file_lines.split.each do |line_part|
       if line_part.include?('.')
         line_part.split(".")[1..-1].each do |word|
@@ -34,11 +33,10 @@ class SourceCode
   
 end
 
-a = SourceCode.new('./reflector.rb')
-b = RubyMethods.new('http://www.ruby-doc.org/core-1.9.3/')
-puts a.count_methods(b.method_hash).sort_by {|key, value| value}
-
 class Statistics
+  def initialize(hash)
+    @hash = hash
+  end
   
 end
 

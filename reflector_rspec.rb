@@ -27,5 +27,10 @@ describe "SourceCode"  do
 end
 
 describe "Statistics" do
-  it "statistics should instantiate"
+  before :each do
+    @methods_hash = {"sort"=>3, "each"=>2, "find"=>1, "split"=>400}
+  end
+  it "statistics should take a hash as an input" do
+    Statistics.new(@methods_hash).should be_an_instance_of(Statistics)
+  end
 end
