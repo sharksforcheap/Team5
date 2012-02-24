@@ -33,6 +33,12 @@ describe "SourceCode"  do
         end"
         SourceCode.new(file_contents, :string).count_methods(@input_hash).should == {"reverse"=>1, "each"=>2, "split"=>1, "find"=>1} 
       end
+      
+      it "should parse out singe .'s " do
+        @doc = SourceCode.new('./spec/tests/period_test.rb')
+        @doc.count_methods(@input_hash).should == {"reverse"=>1, "each"=>2, "split"=>1, "find"=>1}
+      end
+      
     end
     
     describe "#from_git" do
@@ -66,5 +72,11 @@ describe "SourceCode"  do
         code_obj = SourceCode.from_dir('./spec/tests/test_input_directory')
         code_obj.count_methods(@input_hash).should == {"reverse"=>3, "each"=>6, "split"=>3, "find"=>3}
       end
+      
+      it "should not interpret non-directories as directories" do
+        code_obj = SourceCode.from_dir('./spec/tests/readme_test')
+        code_obj.count_methods(@input_hash).should == {"reverse"=>1, "each"=>2, "split"=>1, "find"=>1}
+      end
+      
     end
 end

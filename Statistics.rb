@@ -29,9 +29,9 @@ class MethodReport
       @statistics_hash.keys.each do |method|
         method_class_string = ""
         @ruby_methods[method].each do |class_method|
-            method_class_string << class_method + "   "
+            method_class_string << class_method + "\t"
         end
-        @output << "#{method} (#{@statistics_hash[method]}): #{method_class_string} \n"
+        @output << "#{method} (#{@statistics_hash[method]}):\n\t#{method_class_string} \n\n"
       end
       @output
     end

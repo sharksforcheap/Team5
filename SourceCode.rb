@@ -21,7 +21,9 @@ class SourceCode
     file = File.open(document, 'r')
     file_lines = ''
     while line = file.gets do 
-      file_lines += line.split("#")[0]
+      unless line.strip[0] == '#'
+        file_lines += line.split("#")[0]
+      end
     end
     file_lines
   end
@@ -34,8 +36,9 @@ class SourceCode
     @parts_list = {}
     @file_lines.gsub!(/([""'])(?:(?=(\\?))\2.)*?\1/, "")
     @file_lines = parse(@file_lines)
+    
     @file_lines.split.each do |line_part|
-      if line_part.include?('.')
+      if line_part.include?('.') && line_part.length > 3
         line_part.split(".")[1..-1].each do |word|
         word = word.split("\(")[0]
           if input_hash.has_key?(word)
@@ -74,11 +77,11 @@ class SourceCode
     directories = Dir.glob(formatted_path + "**/*")
     directories << directory
     accumulated_contents = ''
-    directories.each do |subdirectory|
-      unless subdirectory.match(/\w\./) || subdirectory.match(/README/)
-        Dir.foreach(subdirectory) do |file|
+    directories.each do |directory|
+      if File.directory?(directory)
+        Dir.foreach(directory) do |file|
           if file.match(/\w/) && file.end_with?('.rb')
-            accumulated_contents += SourceCode.get_file_contents(SourceCode.format_path(subdirectory) + file)
+            accumulated_contents += SourceCode.get_file_contents(SourceCode.format_path(directory) + file)
           end
         end
       end
