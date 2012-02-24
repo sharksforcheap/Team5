@@ -36,7 +36,7 @@ describe "SourceCode"  do
     end
     
     describe "#from_git" do
-      it "should download copy of git source code into sub directory" do
+      it "should download copy of git source code into sub directory /repos/*name_of_repo" do
         @input_hash = {'reverse'=>['string','hash','array'], 'split'=>['string'], 'each'=>['array', 'hash'], 'find'=>['array']}
         doc = SourceCode.from_git('git://github.com/sharksforcheap/test.git')
         doc.count_methods(@input_hash).should == {"reverse"=>1, "each"=>2, "split"=>1, "find"=>1}

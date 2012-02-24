@@ -51,13 +51,19 @@ class SourceCode
     path << "/" unless path.end_with?("/")
     path
   end
-  
+
   def self.from_file filename
     SourceCode.new(filename)
   end
   
   def self.from_git git_repo
-    Git.clone(git_repo, './repos', :bare => true)
+    repo_name = git_repo.split('/')[-2..-1].join('/').split('.')[0]
+    location = './repos/' + repo_name
+    begin
+      Git.clone(git_repo, location)
+    rescue
+      SourceCode.from_dir(location)
+    end
   end
   
   
