@@ -19,7 +19,7 @@ class SourceCode
   def self.get_file_contents document
     file = File.open(document, 'r')
     file_lines = ''
-    while line = file.gets do      
+    while line = file.gets do 
       file_lines += line.split("#")[0]
     end
     file_lines
