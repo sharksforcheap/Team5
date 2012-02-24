@@ -4,50 +4,37 @@ require 'git'
 class SourceCode
 
   def initialize source, file_type= :file
-    if file_type == :file
-      @file_lines = SourceCode.get_file_contents source
-    elsif file_type == :string
+    case file_type
+    when :file
+      @file_lines = SourceCode.file_contents source
+    when :string
       @file_lines = source      
-    elsif file_type == :folder
+    when :folder
       @file_lines = SourceCode.from_dir source      
     end
   end
-  
-  def see_contents
-    @file_lines
-  end
-    
-  def self.get_file_contents document
-    file = File.open(document, 'r')
-    file_lines = ''
-    while line = file.gets do 
-      unless line.strip[0] == '#'
-        file_lines += line.split("#")[0]
-      end
-    end
-    file_lines
-  end
+
   
   def parse(string)
     string.gsub("(", ' ').gsub(")", ' ')
   end
   
-  def count_methods(input_hash = {})
-    @parts_list = {}
-    @file_lines.gsub!(/([""'])(?:(?=(\\?))\2.)*?\1/, "")
+  def count_methods(library_methods = {})
+    parts = {}
+    
+    @file_lines.gsub!(/([""'])(?:(?=(\\?))\2.)*?\1/, "") #wow. you're smart, and i feel stupid
     @file_lines = parse(@file_lines)
     
     @file_lines.split.each do |line_part|
-      if line_part.include?('.') && line_part.length > 3
-        line_part.split(".")[1..-1].each do |word|
+      next unless line_part.include?('.') && line_part.length > 3
+      line_part.split(".")[1..-1].each do |word|
         word = word.split("\(")[0]
-          if input_hash.has_key?(word)
-            @parts_list[word] = (@parts_list[word].nil? ? 1 : @parts_list[word] + 1)
-          end
+        if library_methods.has_key?(word)
+          parts[word] = (parts[word].nil? ? 1 : parts[word] + 1)
         end
       end
     end
-    @parts_list
+    parts
   end
 
   def self.format_path path
@@ -81,13 +68,27 @@ class SourceCode
       if File.directory?(directory)
         Dir.foreach(directory) do |file|
           if file.match(/\w/) && file.end_with?('.rb')
-            accumulated_contents += SourceCode.get_file_contents(SourceCode.format_path(directory) + file)
+            accumulated_contents += SourceCode.file_contents(SourceCode.format_path(directory) + file)
           end
         end
       end
     end
     SourceCode.new(accumulated_contents, :string)
   end
+  
+  private
+  
+  def self.file_contents document
+    file = File.open(document, 'r')
+    file_lines = ''
+    while line = file.gets do 
+      unless line.strip[0] == '#'
+        file_lines += line.split("#")[0]
+      end
+    end
+    file_lines
+  end
+  
 end
 
 # puts SourceCode.from_dir('./tests/').count_methods({'reverse'=>['string','hash','array'], 'split'=>['string'], 'each'=>['array', 'hash'], 'find'=>['array']}
