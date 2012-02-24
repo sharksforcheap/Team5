@@ -63,6 +63,8 @@ class SourceCode
       Git.clone(git_repo, location)
     rescue
       SourceCode.from_dir(location)
+    else
+      SourceCode.from_dir(location)
     end
   end
   
@@ -75,10 +77,8 @@ class SourceCode
     directories.each do |subdirectory|
       unless subdirectory.match(/\w\./)
         Dir.foreach(subdirectory) do |file|
-          if file.match(/\w/)
-            if file.end_with?('.rb')
-              accumulated_contents += SourceCode.get_file_contents(SourceCode.format_path(subdirectory) + file)
-            end
+          if file.match(/\w/) && file.end_with?('.rb')
+            accumulated_contents += SourceCode.get_file_contents(SourceCode.format_path(subdirectory) + file)
           end
         end
       end
