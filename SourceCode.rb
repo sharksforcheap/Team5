@@ -75,7 +75,7 @@ class SourceCode
     directories << directory
     accumulated_contents = ''
     directories.each do |subdirectory|
-      unless subdirectory.match(/\w\./)
+      unless subdirectory.match(/\w\./) || subdirectory.match(/README/)
         Dir.foreach(subdirectory) do |file|
           if file.match(/\w/) && file.end_with?('.rb')
             accumulated_contents += SourceCode.get_file_contents(SourceCode.format_path(subdirectory) + file)
