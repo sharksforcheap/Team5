@@ -37,3 +37,10 @@ class MethodReport
     end
   end
 end 
+
+# Process for MethodReport:
+#  - Take our data and convert it to a hash that all formats can use (:raw, :json, :xml, :html)
+#    + Take that hash and convert it to 'raw'
+#    + Take that hash and convert it to 'json'
+#    + Take the 'json' and convert it to 'xml'
+#  - BOOM.
