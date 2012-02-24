@@ -21,7 +21,7 @@ describe "Statistics" do
   end
 end
 
-describe "DisplayStatistics" do
+describe "MethodReport" do
   before :each do
     @methods_hash = {"sort"=>3, "each"=>2, "find"=>1, 
       "split"=>43, "reverse"=>9, "pop"=>5, "center" => 12,
@@ -29,11 +29,11 @@ describe "DisplayStatistics" do
     @stats = Statistics.new(@methods_hash)
   end
   
-  describe "#format_and_display"
-    it "should display readable statistics, passed from the Statistics class" do
+  describe "#format_and_display" do
+    it "should display readable statistics, passed from the Statistics class (default being raw)" do
       @stats = @stats.top_list(5)
-      display = DisplayStatistics.new(@stats).format_and_display
+      display = MethodReport.new(@stats).format_and_display
       display.should == "split (43): File   String    \ngsub (40): Kernel   String    \ncenter (12): String    \nreverse (9): Array   String    \npop (5): Array    \n"
     end
+  end
 end
-
