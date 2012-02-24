@@ -1,4 +1,4 @@
-require "./reflector.rb"
+require "./SourceCode.rb"
 
 describe "SourceCode"  do
     before :each do

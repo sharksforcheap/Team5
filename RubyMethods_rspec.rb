@@ -4,9 +4,9 @@ require 'fakeweb'
 describe RubyMethods do
   before(:each) do
    FakeWeb.register_uri(:get, "http://ruby-doc.org/core-1.9.3/", 
-                        :body => open("cached_1.9.3_page.html").read )
+                        :body => open("./Cached_Ruby_Core/cached_1.9.3_page.html").read )
    FakeWeb.register_uri(:get, "http://ruby-doc.org/core-1.9.2/", 
-                        :body => open("cached_1.9.2_page.html").read )
+                        :body => open("./Cached_Ruby_Core/cached_1.9.2_page.html").read )
   end
   
   it "should return an empty hash given an empty input" do
@@ -16,10 +16,7 @@ describe RubyMethods do
   
   it "should convert a page into a hash with methods as keys and array of classes as values" do
     info = RubyMethods.new("http://ruby-doc.org/core-1.9.3/")
-    # info.method_hash["asinh"].should == ["Math"]
     info.method_hash["basename"].should == ["File"]
-    # info.method_hash["each"].sort.should == ["ARGF","Array","Dir","Enumerator","ENV","Hash",
-    #                                         "IO","Range","Struct"].sort
   end
   
   it "should return nil if method_hash is asked for an array it did not find" do
@@ -28,10 +25,3 @@ describe RubyMethods do
   end
   
 end
-
-# ----
-# 
-# {
-#   "reverse" => ["Array", "Integer"],
-#   "join" => ["Array", "Enumerable"]
-# }

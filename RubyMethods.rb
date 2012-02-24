@@ -13,10 +13,8 @@ class RubyMethods
       puts "Invalid URL or missing file"
       return
     end
-    # output = File.open("RubyClasses_1.9.3.txt","w")
     doc.css('#method-index .entries p a').each do |link|
       entry_array = link.content.split
-      # entry_array = link.content.split(" ")
       method_string = entry_array[0]
       class_string = entry_array[1].delete("()")
       if @method_hash.has_key?(method_string)
@@ -25,12 +23,6 @@ class RubyMethods
         @method_hash[method_string] = [class_string]
       end
     end
-    # puts @method_hash.select {|key, value| value.length == 1}.length
-    #     puts @method_hash.length
-    # @method_hash.each do |key, value|
-    #   output.write key + ": " + value.to_s + "\n"
-    # end
   end
-
 end
-#
+
