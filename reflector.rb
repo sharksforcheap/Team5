@@ -1,4 +1,5 @@
 require './RubyMethods.rb'
+require 'git'
 
 class SourceCode
 
@@ -54,6 +55,11 @@ class SourceCode
   def self.from_file filename
     SourceCode.new(filename)
   end
+  
+  def self.from_git git_repo
+    Git.clone(git_repo, './repos', :bare => true)
+  end
+  
   
   def self.from_dir(directory)
     formatted_path = SourceCode.format_path(directory)
