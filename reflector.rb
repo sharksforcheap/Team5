@@ -1,4 +1,5 @@
 require './RubyMethods.rb'
+require 'git'
 
 class SourceCode
 
@@ -50,10 +51,23 @@ class SourceCode
     path << "/" unless path.end_with?("/")
     path
   end
-  
+
   def self.from_file filename
     SourceCode.new(filename)
   end
+  
+  def self.from_git git_repo
+    repo_name = git_repo.split('/')[-2..-1].join('/').split('.')[0]
+    location = './repos/' + repo_name
+    begin
+      Git.clone(git_repo, location)
+    rescue
+      SourceCode.from_dir(location)
+    else
+      SourceCode.from_dir(location)
+    end
+  end
+  
   
   def self.from_dir(directory)
     formatted_path = SourceCode.format_path(directory)
@@ -63,10 +77,8 @@ class SourceCode
     directories.each do |subdirectory|
       unless subdirectory.match(/\w\./)
         Dir.foreach(subdirectory) do |file|
-          if file.match(/\w/)
-            if file.end_with?('.rb')
-              accumulated_contents += SourceCode.get_file_contents(SourceCode.format_path(subdirectory) + file)
-            end
+          if file.match(/\w/) && file.end_with?('.rb')
+            accumulated_contents += SourceCode.get_file_contents(SourceCode.format_path(subdirectory) + file)
           end
         end
       end

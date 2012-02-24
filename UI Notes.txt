@@ -1,0 +1,35 @@
+User Interface flow:
+
+Welcome to Ruby Reflector!
+This program will enlighten your parents and change your life.
+
+Do you want to analyze [f]ile, [d]irectory structure, or [g]ithub repo?
+> f
+
+Please enter the location of the ruby file (for example /User/myfile.rb)
+> /User/myfile.rb
+File not found, please try again:
+> /User/myfolder/file.rb
+How many of the top methods do you want to see? (Default is 10)
+> 20
+
+ [OUTPUT]
+
+Do you want to analyze [f]ile, [d]irectory structure, or [g]ithub repo?
+> d
+
+Please enter the location of the folder (for example /User/subdirectory)
+> /User
+How many of the top methods do you want to see? (Default is 10)
+> 20
+
+ [OUTPUT]
+
+Do you want to analyze [f]ile, [d]irectory structure, or [g]ithub repo?
+> g
+Enter the github repository location (for example git://github.com/Devbootcamp/Team5.git)
+> git://github.com/someuser/some.git
+How many of the top methods do you want to see? (Default is 10)
+> 20
+
+ [OUTPUT]
