@@ -17,30 +17,23 @@ class Statistics
   end
 end
 
-class DisplayStatistics
+class MethodReport
   def initialize(statistics_hash)
     @ruby_methods = RubyMethods.new("http://ruby-doc.org/core-1.9.3/").method_hash
     @statistics_hash = statistics_hash
     @output = ""
   end
-  def format_and_display
-    @statistics_hash.keys.each do |method|
-      method_class_string = ""
-      @ruby_methods[method].each do |class_method|
-          method_class_string << class_method + "   "
+  def format_and_display(format = :raw)
+    case format
+    when :raw
+      @statistics_hash.keys.each do |method|
+        method_class_string = ""
+        @ruby_methods[method].each do |class_method|
+            method_class_string << class_method + "   "
+        end
+        @output << "#{method} (#{@statistics_hash[method]}): #{method_class_string} \n"
       end
-      @output << "#{method} (#{@statistics_hash[method]}): #{method_class_string} \n"
+      @output
     end
-    @output
   end
-end
-
-#### Following code is for testing purposes, to retrieve the top 5 used methods and output their statsitics in a neat display.
-
-# @methods_hash = {"sort"=>3, "each"=>2, "find"=>1, 
-#   "split"=>43, "reverse"=>9, "pop"=>5, "center" => 12,
-#   "gsub" => 40 }
-# @stats = Statistics.new(@methods_hash)
-# @stats = @stats.top_list(5)
-# display = DisplayStatistics.new(@stats)
-# display.format_and_display
+end 
