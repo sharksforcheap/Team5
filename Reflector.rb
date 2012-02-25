@@ -1,6 +1,6 @@
-require './SourceCode'
-require './Statistics'
-require './RubyMethods'
+require './lib/SourceCode'
+require './lib/Statistics'
+require './lib/RubyMethods'
 
 class Reflector
   def self.start
