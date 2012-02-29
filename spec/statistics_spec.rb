@@ -34,7 +34,7 @@ describe "MethodReport" do
     it "should display readable statistics, passed from the Statistics class (default being raw)" do
       @stats = @stats.top_list(5)
       display = MethodReport.new(@stats).format_and_display
-      display.should == "split (43): File   String    \ngsub (40): Kernel   String    \ncenter (12): String    \nreverse (9): Array   String    \npop (5): Array    \n"
+      display.should == "split (43):\n\tFile\tString\t \n\ngsub (40):\n\tKernel\tString\t \n\ncenter (12):\n\tString\t \n\nreverse (9):\n\tArray\tString\t \n\npop (5):\n\tArray\t \n\n"
     end
   end
 end
