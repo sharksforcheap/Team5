@@ -1,7 +1,6 @@
-require './lib/SourceCode'
-require './lib/Statistics'
-require './lib/RubyMethods'
-
+require File.expand_path(File.dirname(__FILE__) + '/lib/sourcecode')
+require File.expand_path(File.dirname(__FILE__) + '/lib/statistics')
+require File.expand_path(File.dirname(__FILE__) + '/lib/rubymethods')
 
 class Reflector
   def self.start
