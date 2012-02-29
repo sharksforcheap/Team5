@@ -1,4 +1,5 @@
-require '../lib/sourcecode'
+require File.expand_path(File.dirname(__FILE__) + '/../lib/sourcecode')
+
 
 describe "SourceCode"  do
     before :each do

@@ -1,4 +1,5 @@
-require '../lib/RubyMethods.rb'
+require File.expand_path(File.dirname(__FILE__) + '/../lib/rubymethods')
+
 require 'fakeweb'
 
 describe RubyMethods do
@@ -18,7 +19,7 @@ describe RubyMethods do
     info = RubyMethods.new("http://ruby-doc.org/core-1.9.3/")
     info.method_hash["basename"].should == ["File"]
   end
-  
+
   it "should return nil if method_hash is asked for an array it did not find" do
     info = RubyMethods.new("http://ruby-doc.org/core-1.9.3/")
     info.method_hash["frog"].should == nil

@@ -1,4 +1,6 @@
-require './lib/RubyMethods.rb'
+#require './lib/rubymethods.rb'
+require File.expand_path(File.dirname(__FILE__) + '/rubymethods')
+
 require 'git'
 
 class SourceCode

@@ -1,4 +1,5 @@
-require "../lib/Statistics.rb"
+require File.expand_path(File.dirname(__FILE__) + '/../lib/statistics')
+
 
 describe "Statistics" do
   before :each do
