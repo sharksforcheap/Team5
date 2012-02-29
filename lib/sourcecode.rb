@@ -58,40 +58,38 @@ class SourceCode
     end
   end
   
-  
-  def self.from_dir(directory)
-    formatted_path = SourceCode.format_path(directory)
-    directories = Dir.glob(formatted_path + "**/*")
-    directories << directory
-    accumulated_contents = ''
-    directories.each do |directory|
-      if File.directory?(directory)
-        Dir.foreach(directory) do |file|
-          if file.match(/\w/) && file.end_with?('.rb')
-            accumulated_contents += SourceCode.file_contents(SourceCode.format_path(directory) + file)
+  class << self
+    def from_dir(directory)
+      formatted_path = SourceCode.format_path(directory)
+      directories = Dir.glob(formatted_path + "**/*")
+      directories << directory
+      accumulated_contents = ''
+      directories.each do |directory|
+        if File.directory?(directory)
+          Dir.foreach(directory) do |file|
+            if file.match(/\w/) && file.end_with?('.rb')
+              accumulated_contents += SourceCode.file_contents(SourceCode.format_path(directory) + file)
+            end
           end
         end
       end
+      SourceCode.new(accumulated_contents, :string)
     end
-    SourceCode.new(accumulated_contents, :string)
   end
   
   private
   
-  def self.file_contents document
-    file = File.open(document, 'r')
-    file_lines = ''
-    while line = file.gets do 
-      unless line.strip[0] == '#'
-        file_lines += line.split("#")[0]
+  class << self
+    def file_contents document
+      file = File.open(document, 'r')
+      file_lines = ''
+      while line = file.gets do 
+        unless line.strip[0] == '#'
+          file_lines += line.split("#")[0]
+        end
       end
+      file_lines
     end
-    file_lines
-  end
-  
+  end 
+   
 end
-
-# puts SourceCode.from_dir('./tests/').count_methods({'reverse'=>['string','hash','array'], 'split'=>['string'], 'each'=>['array', 'hash'], 'find'=>['array']}
-# )
-
-# ignore strings, except when interpolated
