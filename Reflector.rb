@@ -2,6 +2,7 @@ require './lib/SourceCode'
 require './lib/Statistics'
 require './lib/RubyMethods'
 
+
 class Reflector
   def self.start
       puts "Welcome to Ruby Reflector!\nThis program will enlighten your parents and change your life.\n\n"
