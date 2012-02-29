@@ -1,8 +1,8 @@
-require "../lib/SourceCode.rb"
+require '../lib/sourcecode'
 
 describe "SourceCode"  do
     before :each do
-      @doc = SourceCode.new('./spec/tests/test.rb', :file)
+      @doc = SourceCode.new('./tests/test.rb', :file)
     end
     it "should create an array for storing a sourcecode file" do
       @doc.should be_an_instance_of(SourceCode)
@@ -19,12 +19,12 @@ describe "SourceCode"  do
       end
 
       it "should return methods followed by paranthesis as part of the #count_methods array" do
-        @doc = SourceCode.new('./spec/tests/test_parens.rb')
+        @doc = SourceCode.new('./tests/test_parens.rb')
         @doc.count_methods(@ruby_methods).should == {"sort_by"=>1, "each"=>2, "split"=>2}
       end
 
       it "should return an array of methods, ignoring anything commented." do
-        @doc = SourceCode.new('./spec/tests/test_commenting.rb')
+        @doc = SourceCode.new('./tests/test_commenting.rb')
         @doc.count_methods(@ruby_methods).should == {"reverse"=>1, "each"=>2, "split"=>1, "find"=>1}
       end
       
@@ -37,7 +37,7 @@ describe "SourceCode"  do
       end
       
       it "should parse out singe .'s " do
-        @doc = SourceCode.new('./spec/tests/period_test.rb')
+        @doc = SourceCode.new('./tests/period_test.rb')
         @doc.count_methods(@ruby_methods).should == {"reverse"=>1, "each"=>2, "split"=>1, "find"=>1}
       end
       
@@ -57,7 +57,7 @@ describe "SourceCode"  do
       end
       
       it "should be able to instantiate through factory method on single file" do
-        code_obj = SourceCode.from_file('./spec/tests/test.rb')
+        code_obj = SourceCode.from_file('./tests/test.rb')
         code_obj.count_methods(@ruby_methods).should == {"reverse"=>1, "each"=>2, "split"=>1, "find"=>1}
       end
       
@@ -69,22 +69,22 @@ describe "SourceCode"  do
       end      
     
       it "should be able to instantiate through factory method on directory" do
-        code_obj = SourceCode.from_dir('./spec/tests/test_input_directory/subdir')
+        code_obj = SourceCode.from_dir('./tests/test_input_directory/subdir')
         code_obj.count_methods(@ruby_methods).should == {"reverse"=>1, "each"=>2, "split"=>1, "find"=>1}
       end
     
       it "should be able to instantiate through factory method on directory if given with final slash" do
-        code_obj = SourceCode.from_dir('./spec/tests/test_input_directory/subdir/')
+        code_obj = SourceCode.from_dir('./tests/test_input_directory/subdir/')
         code_obj.count_methods(@ruby_methods).should == {"reverse"=>1, "each"=>2, "split"=>1, "find"=>1}
       end
     
       it "should be able to instantiate through factory method on directory with subdirectories" do
-        code_obj = SourceCode.from_dir('./spec/tests/test_input_directory')
+        code_obj = SourceCode.from_dir('./tests/test_input_directory')
         code_obj.count_methods(@ruby_methods).should == {"reverse"=>3, "each"=>6, "split"=>3, "find"=>3}
       end
       
       it "should not interpret non-directories as directories" do
-        code_obj = SourceCode.from_dir('./spec/tests/readme_test')
+        code_obj = SourceCode.from_dir('./tests/readme_test')
         code_obj.count_methods(@ruby_methods).should == {"reverse"=>1, "each"=>2, "split"=>1, "find"=>1}
       end
       
