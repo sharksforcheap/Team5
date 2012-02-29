@@ -5,9 +5,9 @@ require 'fakeweb'
 describe RubyMethods do
   before(:each) do
    FakeWeb.register_uri(:get, "http://ruby-doc.org/core-1.9.3/", 
-                        :body => open("./spec/Cached_Ruby_Core/cached_1.9.3_page.html").read )
+                        :body => open("./Cached_Ruby_Core/cached_1.9.3_page.html").read )
    FakeWeb.register_uri(:get, "http://ruby-doc.org/core-1.9.2/", 
-                        :body => open("./spec/Cached_Ruby_Core/cached_1.9.2_page.html").read )
+                        :body => open("./Cached_Ruby_Core/cached_1.9.2_page.html").read )
   end
   
   it "should return an empty hash given an empty input" do
